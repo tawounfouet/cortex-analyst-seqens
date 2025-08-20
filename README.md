@@ -10,6 +10,8 @@ Résumé
   - Une vue “Data” pour explorer rapidement les tables du schéma COLIBRI
   - Un chat “Cortex Analyst” pour poser des questions, afficher le SQL généré, exécuter la requête et visualiser les résultats et graphiques
 
+[./ui-cortex_analyst-seqens.png]
+
 Fonctionnalités
 - Navigation simple via la sidebar:
   - About App: présentation des capacités de l’outil (texte)
