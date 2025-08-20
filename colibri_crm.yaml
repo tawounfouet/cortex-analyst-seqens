@@ -1,0 +1,454 @@
+name: colibri_crm
+description: |-
+  Ce modèle sémantique permet aux utilisateurs d'analyser les demandes des locataires provenant de divers canaux (tels que l'email, le téléphone, etc.), ainsi que d'explorer des informations sur l'état des demandes et les interactions avec les clients. Ce modèle facilite l'accès aux données sur les demandes des locataires, leur statut, les catégories de demandes, les dates de création et de clôture, ainsi que d'autres informations pertinentes liées aux demandes.
+
+  Les utilisateurs peuvent poser des questions sur des métriques telles que le nombre de demandes ouvertes, le temps moyen de traitement des demandes, le nombre de demandes par catégorie ou par territoire, et les demandes en attente de transfert ou d'escalade. Il permet également d'analyser les tendances des demandes sur différentes périodes de temps, par groupe ou par territoire.
+tables:
+  - name: CUSTOMERREQUESTS
+    base_table:
+      database: DATA_LAKE_DEV
+      schema: COLIBRI
+      table: CUSTOMERREQUESTS
+    dimensions:
+      - name: TICKETNUMBER
+        expr: TICKETNUMBER
+        data_type: VARCHAR(50)
+        description: Unique identifier for a customer's support request or issue.
+        sample_values:
+          - DM_594557
+          - DM_594558
+          - DM_594575
+        synonyms:
+          - case_number
+          - request_id
+          - issue_number
+          - incident_id
+          - service_request_id
+          - ticket_id
+      - name: REQUESTSTATUS
+        expr: REQUESTSTATUS
+        data_type: VARCHAR(4)
+        description: The current status of a customer's request, indicating the progress or outcome of the request, with possible values including "s7" (unknown or unclassified), "S1" (new or initial), and "5" (resolved or completed).
+        sample_values:
+          - s7
+          - S1
+          - '5'
+        synonyms:
+          - request_state
+          - status_code
+          - request_progress
+          - ticket_status
+          - service_status
+      - name: CS_UG
+        expr: CS_UG
+        data_type: VARCHAR(50)
+        description: Unique identifier for a customer support user group.
+        sample_values:
+          - '386940'
+          - '382889'
+          - '380336'
+        synonyms:
+          - user_group
+          - user_category
+          - user_segment
+          - user_type
+          - user_classification
+      - name: CHANNEL
+        expr: CHANNEL
+        data_type: VARCHAR(50)
+        description: The channel through which the customer submitted their request, such as a specific call center (e.g. AST01), or a general channel (e.g. C1, C2).
+        sample_values:
+          - C1
+          - AST01
+          - C2
+        synonyms:
+          - medium
+          - platform
+          - communication_channel
+          - medium_of_communication
+          - sales_channel
+          - marketing_channel
+          - distribution_channel
+      - name: CS_FROMEMAIL
+        expr: CS_FROMEMAIL
+        data_type: VARCHAR(50)
+        description: The email address from which the customer request was sent.
+        sample_values:
+          - laetitia.pont77@hotmail.fr
+          - 829557@noreply.com
+          - analiadeabreu@gmail.com
+        synonyms:
+          - sender_email
+          - from_address
+          - email_origin
+          - originating_email
+          - source_email
+          - email_sender
+      - name: REQUESTOBJECT
+        expr: REQUESTOBJECT
+        data_type: VARCHAR(40000)
+        description: The type of request or inquiry made by a customer, such as a request for payment deadline, liquidation or reimbursement, or a question related to electricity.
+        sample_values:
+          - Demande de délais de paiement
+          - Liquidation/remboursement
+          - Electricité
+        synonyms:
+          - request_item
+          - requested_entity
+          - object_requested
+          - requested_object_type
+          - request_subject
+          - requested_resource
+      - name: CREATEDON
+        expr: CREATEDON
+        data_type: VARCHAR(50)
+        description: Date and time when the customer request was created.
+        sample_values:
+          - '2020-02-03T14:13:00.0000000'
+          - '2020-02-03T14:42:00.0000000'
+          - '2020-02-03T14:54:00.0000000'
+        synonyms:
+          - created_date
+          - creation_time
+          - date_created
+          - timestamp_created
+          - record_creation_date
+          - entry_date
+          - start_date
+          - initialization_date
+      - name: REQUESTDATE
+        expr: REQUESTDATE
+        data_type: VARCHAR(50)
+        description: Date and time when the customer request was made.
+        sample_values:
+          - '2019-08-08T10:22:08.0000000'
+          - '2020-10-20T10:23:00.0000000'
+          - '2017-10-16T12:34:43.0000000'
+        synonyms:
+          - request_timestamp
+          - submission_date
+          - date_requested
+          - request_submission_time
+          - date_received
+      - name: CS_CLIENTACCOUNT
+        expr: CS_CLIENTACCOUNT
+        data_type: VARCHAR(50)
+        description: Unique identifier for the client account associated with the customer request.
+        sample_values:
+          - '303752'
+          - '220960'
+          - '272547'
+        synonyms:
+          - client_account
+          - customer_account
+          - account_name
+          - client_id
+          - account_number
+          - client_reference
+      - name: CS_CUSTOMERACCOUNTNUMBER
+        expr: CS_CUSTOMERACCOUNTNUMBER
+        data_type: VARCHAR(50)
+        description: Unique identifier for the customer's account.
+        sample_values:
+          - '297641'
+          - '022013'
+        synonyms:
+          - customer_account_id
+          - client_account_number
+          - account_number
+          - customer_id
+          - client_id
+          - account_identifier
+      - name: CS_GROUP
+        expr: CS_GROUP
+        data_type: VARCHAR(50)
+        description: Customer Support Group Identifier
+        sample_values:
+          - V90 2229
+          - V90 3485
+          - V90 1172
+        synonyms:
+          - group_name
+          - group_id
+          - group_category
+          - group_classification
+          - group_type
+          - group_label
+          - group_identifier
+      - name: MODIFIEDON
+        expr: MODIFIEDON
+        data_type: VARCHAR(50)
+        description: The date and time when the customer request was last modified.
+        sample_values:
+          - Carole DENEUXMENIELLE
+          - Adja Berthe
+          - Aurélie Kasanda
+        synonyms:
+          - last_updated
+          - updated_at
+          - modified_at
+          - last_changed
+          - updated_date
+          - revision_date
+          - last_modified_date
+      - name: MAINREQUEST
+        expr: MAINREQUEST
+        data_type: VARCHAR(50)
+        description: Unique identifier for the main request made by the customer.
+        sample_values:
+          - '330855'
+          - '241725'
+          - '141634'
+        synonyms:
+          - primary_request
+          - main_issue
+          - key_request
+          - central_request
+          - main_query
+          - principal_request
+          - main_inquiry
+      - name: MODIFIEDAT
+        expr: MODIFIEDAT
+        data_type: VARCHAR(50)
+        description: Date and time when the customer request was last modified.
+        sample_values:
+          - '2019-01-25T08:35:00.0000000'
+          - '2019-01-24T15:20:00.0000000'
+          - '2020-09-09T11:12:00.0000000'
+        synonyms:
+          - last_updated
+          - last_modified_date
+          - updated_at
+          - last_changed
+          - modification_date
+          - last_update_timestamp
+      - name: CLOSINGDATE
+        expr: CLOSINGDATE
+        data_type: VARCHAR(50)
+        description: Date and time when the customer request was closed.
+        sample_values:
+          - '2017-10-16T12:34:43.0000000'
+          - '2017-10-17T11:48:46.0000000'
+          - '2017-10-19T08:47:33.0000000'
+        synonyms:
+          - completion_date
+          - end_date
+          - resolution_date
+          - closed_on
+          - final_date
+          - termination_date
+          - expiry_date
+      - name: CS_TRANSFERTN2DATE
+        expr: CS_TRANSFERTN2DATE
+        data_type: VARCHAR(50)
+        description: Date and time when the customer's transfer was initiated.
+        sample_values:
+          - '2020-08-10T12:09:23.0000000'
+          - '2020-08-04T08:11:48.0000000'
+        synonyms:
+          - transfer_date_2
+          - second_transfer_date
+          - secondary_transfer_date
+          - transfer_date_two
+          - second_handover_date
+          - secondary_handover_date
+          - transfer_deadline_2
+      - name: CS_TERRITORY
+        expr: CS_TERRITORY
+        data_type: VARCHAR(16777216)
+        description: Customer Sales Territory
+        sample_values:
+          - DD60
+          - DT40
+          - DD10
+        synonyms:
+          - region
+          - area
+          - geographic_location
+          - territory_code
+          - sales_territory
+          - geographic_area
+          - location_code
+          - territory_name
+      - name: CS_AREA
+        expr: CS_AREA
+        data_type: VARCHAR(16777216)
+        description: ''
+        sample_values:
+          - Val-d'Oise Est
+          - Essonne Nord Ouest
+          - Seine St Denis Ouest
+        synonyms:
+          - region
+          - territory
+          - geographic_area
+          - service_area
+          - coverage_area
+          - area_of_operation
+          - operational_area
+          - business_area
+    facts:
+      - name: ID
+        expr: ID
+        data_type: NUMBER(38,0)
+        description: Unique identifier for a customer request.
+        sample_values:
+          - '241409'
+          - '241456'
+          - '241532'
+        synonyms:
+          - identifier
+          - unique_id
+          - record_id
+          - row_id
+          - primary_key
+          - key_id
+          - unique_identifier
+          - record_identifier
+      - name: CONTACT
+        expr: CONTACT
+        data_type: NUMBER(38,0)
+        description: The number of times a customer has contacted the company.
+        sample_values:
+          - '140302'
+          - '34123'
+          - '30927'
+        synonyms:
+          - person
+          - individual
+          - customer
+          - client
+          - caller
+          - user
+          - account_holder
+          - subscriber
+      - name: CATEGORY
+        expr: CATEGORY
+        data_type: NUMBER(38,0)
+        description: 'The category of the customer''s request, which can be one of the following: 7 (Complaint), 14 (Suggestion), or 51 (Other).'
+        sample_values:
+          - '51'
+          - '7'
+          - '14'
+        synonyms:
+          - type
+          - classification
+          - group
+          - kind
+          - genre
+          - class
+          - sort
+          - designation
+      - name: CS_SUBCATEGORY
+        expr: CS_SUBCATEGORY
+        data_type: NUMBER(38,0)
+        description: Subcategory of the customer's service request, which is a more specific classification within a category that describes the nature of the request.
+        sample_values:
+          - '74'
+          - '8'
+          - '232'
+        synonyms:
+          - subcategory_type
+          - subcategory_id
+          - subcategory_code
+          - subcategory_value
+          - subcategory_classification
+      - name: STATUS
+        expr: STATUS
+        data_type: NUMBER(38,0)
+        description: The current status of the customer's request, where 1 represents 'New', 2 represents 'In Progress', and 3 represents 'Completed'.
+        sample_values:
+          - '1'
+          - '3'
+          - '2'
+        synonyms:
+          - state
+          - condition
+          - situation
+          - position
+          - standing
+          - current_state
+          - progress
+          - phase
+      - name: CS_WORKFLOW
+        expr: CS_WORKFLOW
+        data_type: NUMBER(38,0)
+        description: |-
+          CS_WORKFLOW likely represents the current workflow or status of a customer request, with the following possible values:
+
+          * 1: New or Initial Request
+          * 10: In Progress or Under Review
+          * 23: Completed or Resolved
+        sample_values:
+          - '23'
+          - '10'
+          - '1'
+        synonyms:
+          - business_process
+          - workflow_status
+          - process_stage
+          - workflow_phase
+          - process_step
+      - name: CS_EXPORTETAPEWORKFLOW
+        expr: CS_EXPORTETAPEWORKFLOW
+        data_type: NUMBER(38,0)
+        description: The number of days between the date a customer service request was received and the date the work was completed.
+        sample_values:
+          - '81'
+          - '12'
+          - '105'
+        synonyms:
+          - export_eta_workflow
+          - workflow_export_eta
+          - eta_workflow_export
+          - workflow_export_status
+          - export_eta_status
+      - name: CS_ISNEWTENANT
+        expr: CS_ISNEWTENANT
+        data_type: NUMBER(38,0)
+        description: Indicates whether the customer request is for a new tenant (2) or an existing tenant (1).
+        sample_values:
+          - '1'
+          - '2'
+        synonyms:
+          - is_new_customer
+          - new_tenant_flag
+          - new_account_indicator
+          - first_time_client
+          - new_client_status
+      - name: ESCALATION
+        expr: ESCALATION
+        data_type: NUMBER(38,0)
+        description: The number of days since the customer request was submitted that it was escalated to a higher level of support.
+        sample_values:
+          - '1'
+          - '7'
+          - '14'
+        synonyms:
+          - priority_level
+          - urgency_level
+          - alert_level
+          - severity_level
+          - criticality_level
+          - alert_status
+          - priority_status
+          - urgency_status
+      - name: SPAM
+        expr: SPAM
+        data_type: NUMBER(38,0)
+        description: Indicates whether the customer request is considered spam, with 1 representing a legitimate request and 2 representing a spam request.
+        sample_values:
+          - '1'
+          - '2'
+        synonyms:
+          - junk
+          - unwanted
+          - unsolicited
+          - nuisance
+          - unwanted_messages
+          - bulk_messages
+  - name: CHANNELS
+    base_table:
+      database: DATA_LAKE_DEV
+      schema: COLIBRI
+      table: CHANNELS
