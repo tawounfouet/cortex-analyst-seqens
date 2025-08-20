@@ -135,21 +135,7 @@ Notes et limitations
 - Schéma COLIBRI:
   - Le code “Data” n’inclut pas explicitement le nom de base dans les requêtes de données; la base courante doit être correcte.
 
-Feuille de route (suggestions)
-- Ajouter une configuration pour la base par défaut (ex. sélection en sidebar)
-- Permettre la sélection de plusieurs modèles sémantiques (multi-stages)
-- Historiser les conversations et SQL générés (audit/traces)
-- Activer les exemples Chatbot/ChatbotSQL via le menu ou les retirer pour clarté
-- Ajout de métriques SLA/alerting dans les insights (si champs disponibles)
 
-Contribution
-- Ouvrez une issue/PR en décrivant:
-  - Le besoin métier
-  - Les modifications proposées (UI, logique, YAML)
-  - L’impact sur les droits Snowflake, stages et données
-
-Licence
-- À définir. Ajoutez un fichier LICENSE si nécessaire.
 
 Crédits
 - Snowflake Snowpark, Streamlit in Snowflake, Snowflake Cortex Analyst
